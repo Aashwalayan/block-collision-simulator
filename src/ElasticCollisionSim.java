@@ -13,7 +13,7 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
     private final int wallX = 20;
 
     private int collisionCount = 0;
-    private javax.swing.Timer timer; // ✅ explicitly Swing Timer
+    private javax.swing.Timer timer;
 
     // List of active collision effects
     private List<CollisionEffect> effects = new ArrayList<>();
@@ -21,10 +21,10 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
     public ElasticCollisionSim(double mA, double mB) {
         this.mA = mA;
         this.mB = mB;
-        this.vB = -10.0; // Block B starts leftwards
+        this.vB = -10.0;
         this.vA = 0.0;
 
-        timer = new javax.swing.Timer(16, this); // ~60 FPS
+        timer = new javax.swing.Timer(16, this);
         timer.start();
     }
 
@@ -39,11 +39,9 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, width, height);
 
-        // Camera fixed on B
         int screenCenter = width / 2;
         double offset = posB - screenCenter;
 
-        // Grid markings
         g.setColor(Color.LIGHT_GRAY);
         int spacing = 50;
         int startX = -((int) offset % spacing);
@@ -53,24 +51,19 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
             g.drawString(Integer.toString(worldCoord), x + 2, height - 10);
         }
 
-        // Wall
         g.setColor(Color.BLACK);
         g.fillRect((int) (wallX - offset), 50, 10, 100);
 
-        // Block A
         g.setColor(Color.BLUE);
         g.fillRect((int) (posA - offset), 80, blockSize, blockSize);
 
-        // Block B
         g.setColor(Color.RED);
         g.fillRect(screenCenter, 80, blockSize, blockSize);
 
-        // HUD
         g.setColor(Color.BLACK);
         g.drawString("Collisions: " + collisionCount, 20, 20);
         g.drawString("mA=" + (long) mA + "  mB=" + (long) mB, 140, 20);
 
-        // Draw collision effects
         for (Iterator<CollisionEffect> it = effects.iterator(); it.hasNext();) {
             CollisionEffect fx = it.next();
             if (fx.isAlive()) {
@@ -96,7 +89,6 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
             effects.add(new CollisionEffect(posA, 80 + blockSize / 2.0));
         }
 
-        // --- A hits B ---
         if (posB <= posA + blockSize) {
             collisionCount++;
 
@@ -115,10 +107,9 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
         repaint();
     }
 
-    // Simple class for collision visual effect
     private static class CollisionEffect {
         double x, y;
-        int life = 20; // frames
+        int life = 20;
 
         CollisionEffect(double x, double y) {
             this.x = x;
