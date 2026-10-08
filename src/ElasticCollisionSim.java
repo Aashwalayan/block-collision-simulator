@@ -15,7 +15,6 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
     private int collisionCount = 0;
     private javax.swing.Timer timer;
 
-    // List of active collision effects
     private List<CollisionEffect> effects = new ArrayList<>();
 
     public ElasticCollisionSim(double mA, double mB) {
@@ -79,7 +78,6 @@ public class ElasticCollisionSim extends JPanel implements ActionListener {
         posA += vA * 0.1;
         posB += vB * 0.1;
 
-        // --- A hits wall ---
         if (posA <= wallX + 10) {
             collisionCount++;
             vA = -vA;
